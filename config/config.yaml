@@ -1,0 +1,5 @@
+input_path: "input/student-mat.csv"
+output_path: ""
+sqlite_db: "student.db"
+table_name: "student"
+log_file: "log/student_etl.log"
