@@ -1,11 +1,8 @@
 import pandas as pd
+
 from utils.load_config import config
-from utils.sql_conn import SQLiteConnection
 from utils.logger import setup_logger
-
-
-# create a logger instance
-logger = setup_logger()
+from utils.sql_conn import SQLiteConnection
 
 # Load configuration
 CONFIG = config("config/config.yaml", "yaml")
@@ -14,12 +11,16 @@ TABLE_NAME = CONFIG["table_name"]
 LOG_FILE = CONFIG["log_file"]
 
 
+# set up logging
+logger = setup_logger(log_file=LOG_FILE, log_level="DEBUG")
+
+
 # create a sqlite db connection
 sqlite_db = SQLiteConnection(db_name=CONFIG["sqlite_db"])
 sqlite_db.connect()
 
 
-def extract_csv_file(input_path:str, delimiter:str)-> pd.DataFrame:
+def extract_csv_file(input_path: str, delimiter: str) -> pd.DataFrame:
     """
     Extract data from csv files
     Parameters
@@ -61,16 +62,15 @@ def etl_pipeline():
     """
     # Extract data
     print(f"INPUT_PATH = {INPUT_PATH}")
-    input_df = extract_csv_file(input_path=INPUT_PATH, delimiter=';')
+    input_df = extract_csv_file(input_path=INPUT_PATH, delimiter=";")
     logger.info(f"Step 1. Date extracted from source.")
 
     print(input_df.columns)
     print(input_df.dtypes)
     print(input_df.head(10))
 
-
     # Load the data in DWH
-    load_to_dwh(table_name=TABLE_NAME, df=df, insert_type='replace')
+    load_to_dwh(table_name=TABLE_NAME, df=input_df, insert_type="replace")
     logger.info(f"Step 3. Date loaded into DWH.")
 
     sqlite_db.close_connection()

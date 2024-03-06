@@ -1,6 +1,7 @@
 # List of files and directories to be ignored and not tracked by by Git
 log/
 .vscode
-util/__pycache__
+utils/__pycache__
 test.py
 input/
+*.db

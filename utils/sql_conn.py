@@ -1,6 +1,6 @@
 import sqlite3
 
-from util.logger import setup_logger
+from utils.logger import setup_logger
 
 
 class SQLiteConnection:
