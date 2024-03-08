@@ -1,5 +1,3 @@
-import json
-
 import yaml
 
 
@@ -33,6 +31,6 @@ def config(config_file, file_type):
     except FileNotFoundError:
         raise FileNotFoundError(f"Configuration file '{config_file}' not found.")
     except Exception as e:
-        raise json.JSONDecodeError(
+        raise Exception(
             f"Error in reading configuration file '{config_file}': {e}"
         )

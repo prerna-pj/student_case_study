@@ -41,6 +41,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     Return:
     df: Transformed df
     """
+    # remove duplicates from the main student table
     return df
 
 
@@ -65,9 +66,8 @@ def etl_pipeline():
     input_df = extract_csv_file(input_path=INPUT_PATH, delimiter=";")
     logger.info(f"Step 1. Date extracted from source.")
 
-    print(input_df.columns)
-    print(input_df.dtypes)
-    print(input_df.head(10))
+    # # Transform data
+    # input_df = transform_data(input_df)
 
     # Load the data in DWH
     load_to_dwh(table_name=TABLE_NAME, df=input_df, insert_type="replace")
